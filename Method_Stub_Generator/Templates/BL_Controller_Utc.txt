@@ -1,0 +1,267 @@
+﻿[TestMethod]
+public void #SQLLIBMETHODNAME#_SignalRId_Null()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = null
+    };
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(null, mockKeyVault.Object, null, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_SignalRId_Empty()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = string.Empty
+    };
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(null, mockKeyVault.Object, null, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_CorrelationId_Null()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = "123456",
+        CorrelationId = null
+    };
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(null, mockKeyVault.Object, null, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_CorrelationId_Empty()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = "123456",
+        CorrelationId = string.Empty
+    };
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(null, mockKeyVault.Object, null, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_MessageParameters_Null()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = "123456",
+        CorrelationId = "987654",
+        Parameters = null
+    };
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(null, mockKeyVault.Object, null, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_MessageParameters_Empty()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = "123456",
+        CorrelationId = "987654",
+        Parameters = new Dictionary<string, string>()
+    };
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(null, mockKeyVault.Object, null, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_MessageParameters_InValidKey()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = "123456",
+        CorrelationId = "987654",
+        Parameters = new Dictionary<string, string>()
+    };
+    reqMessage.Parameters.Add("testKey", "testValue");
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(null, mockKeyVault.Object, null, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_MessageParameters_InValidType()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = "123456",
+        CorrelationId = "987654",
+        Parameters = new Dictionary<string, string>()
+    };
+    var vrtsEntityListDto = new VrtsEntity
+    {
+        UserId = "123456789",
+        Active = false,
+        CompanyId = 123
+    };
+    reqMessage.Parameters.Add(ParametersDicKeyVal, JsonConvert.SerializeObject(vrtsEntityListDto));
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(null, mockKeyVault.Object, null, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_InValidModel()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var mockPushLib = GetMockPushLibrary();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = "123456",
+        CorrelationId = "987654",
+        Parameters = new Dictionary<string, string>()
+    };
+    
+	#DATAOBJFORUTC#
+
+    var reqMsgParamContent = JsonConvert.SerializeObject(#DATAOBJNAMEASPARAM#);
+    reqMessage.Parameters.Add(ParametersDicKeyVal, reqMsgParamContent);
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(mockPushLib.Object, mockKeyVault.Object, null, mockActivationContext);
+    #CLASSNAMEASPARAM#Controller.ModelState.AddModelError("ModelState", "Invalid");
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_SuccessTest()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var mockPushLib = GetMockPushLibrary();
+    var returnResult = "";
+
+    var #CLASSNAMEASPARAM#Mock = new Mock<I#CLASSNAME#>();
+    #CLASSNAMEASPARAM#Mock.Setup(x => x.#SQLLIBMETHODNAME#(It.IsAny<#DATAOBJNAME#>(), It.IsAny<string>(), It.IsAny<string>()))
+        .Returns(Task.FromResult(returnResult));
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = "123456",
+        CorrelationId = "987654",
+        Parameters = new Dictionary<string, string>()
+    };
+    
+	#DATAOBJFORUTC#
+
+    var reqMsgParamContent = JsonConvert.SerializeObject(#DATAOBJNAMEASPARAM#);
+    reqMessage.Parameters.Add(ParametersDicKeyVal, reqMsgParamContent);
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(mockPushLib.Object, mockKeyVault.Object, #CLASSNAMEASPARAM#Mock.Object, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as OkObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 200);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_#CLASSNAME#_Null()
+{
+    // Arrange
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var mockPushLib = GetMockPushLibrary();
+    var reqMessage = new RequestDataMessage()
+    {
+        ClientId = "123456",
+        CorrelationId = "987654",
+        Parameters = new Dictionary<string, string>()
+    };
+
+    #DATAOBJFORUTC#
+
+    var reqMsgParamContent = JsonConvert.SerializeObject(#DATAOBJNAMEASPARAM#);
+    reqMessage.Parameters.Add(ParametersDicKeyVal, reqMsgParamContent);
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(mockPushLib.Object, mockKeyVault.Object, null, mockActivationContext);
+    var retVal = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(reqMessage).Result as ObjectResult;
+
+    // Assert
+    Assert.IsNotNull(retVal);
+    Assert.AreEqual(retVal.StatusCode, 500);
+}

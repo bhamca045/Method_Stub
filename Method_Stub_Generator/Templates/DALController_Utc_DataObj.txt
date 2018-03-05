@@ -1,0 +1,53 @@
+﻿[TestMethod]
+public void #SQLLIBMETHODNAME#_NullTest()
+{
+    // Arrange
+    var mockErrorPublisher = GetMockErrorLibraryInstance();
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var mock#CLASSNAME# = new Mock<I#CLASSNAME#>();
+    mock#CLASSNAME#.Setup(a => a.#SQLLIBMETHODNAME#(It.IsAny<#DATAOBJNAME#>(), It.IsAny<string>(),
+        It.IsAny<string>(), It.IsAny<string>()))
+        .ReturnsAsync("");
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(mockErrorPublisher.Object, mockKeyVault.Object,
+        mock#CLASSNAME#.Object, mockActivationContext);
+    var result = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(null);
+
+    //Assert
+    Assert.IsNotNull(result);
+    if (result.Exception?.InnerException != null)
+    {
+        Assert.AreEqual("Value cannot be null.\r\nParameter name: #DATAOBJNAMEASPARAM#",
+            result.Exception.InnerException.Message);
+    }
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_SuccessTest()
+{
+    // Arrange
+    string serializedData = "";
+
+    var mockErrorPublisher = GetMockErrorLibraryInstance();
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var mock#CLASSNAME# = new Mock<I#CLASSNAME#>();
+    mock#CLASSNAME#.Setup(a => a.#SQLLIBMETHODNAME#(It.IsAny<#DATAOBJNAME#>(), It.IsAny<string>(),
+            It.IsAny<string>(), It.IsAny<string>()))
+        .ReturnsAsync(serializedData);
+    
+	#DATAOBJFORUTC#
+    
+	var jsonObjString = JsonConvert.SerializeObject(#DATAOBJNAMEASPARAM#);
+    
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(mockErrorPublisher.Object, mockKeyVault.Object,
+        mock#CLASSNAME#.Object, mockActivationContext);
+    var result = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(jsonObjString).Result;
+
+    //Assert
+    Assert.IsNotNull(result);
+    Assert.AreEqual(result, serializedData);
+}

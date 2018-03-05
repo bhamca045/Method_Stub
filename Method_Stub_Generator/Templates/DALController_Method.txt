@@ -1,0 +1,29 @@
+﻿[Route("#SQLLIBMETHODNAME#/{signalRClientId?}")]
+public async Task<string> #SQLLIBMETHODNAME#([FromBody] dynamic #DATAOBJNAMEASPARAM#, string signalRClientId = "")
+{
+    try
+    {
+        if (string.IsNullOrEmpty(Convert.ToString(#DATAOBJNAMEASPARAM#)))
+        {
+            throw new ArgumentNullException(nameof(#DATAOBJNAMEASPARAM#));
+        }
+
+        // Gets the Details.
+        var #DATAOBJNAMEASPARAM#Input = (#DATAOBJNAME#)JsonConvert.DeserializeObject(#DATAOBJNAMEASPARAM#.ToString(), typeof(#DATAOBJNAME#));
+        var #DATAOBJNAMEASPARAM#Sp = _configurationPackage.Settings.Sections["StoredProc"].Parameters[""].Value;
+
+        // Executes the #DATAOBJNAME# sp and returns the results.
+        var #DATAOBJNAMEASPARAM#Results = await #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#Input,
+            _sqlCdoSuite6ConnectionString, #DATAOBJNAMEASPARAM#Sp, signalRClientId);
+
+        return #DATAOBJNAMEASPARAM#Results;
+    }
+    catch (Exception ex)
+    {
+        _telemetryClient.TrackException(ex);
+        _errorPublishLibrary.ReportError(ex, Assembly.GetExecutingAssembly().ToString(),
+            ex.GetType().ToString(),
+            "Error", Environment.UserName, "", signalRClientId);
+        throw;
+    }
+}

@@ -1,0 +1,24 @@
+﻿public async Task<string> #SQLLIBMETHODNAME#(#DATAOBJNAME# #DATAOBJNAMEASPARAM#, string connectionString, string sqlCommandText, string signalRClientId = "")
+{
+    if (#DATAOBJNAMEASPARAM# == null)
+    {
+        throw new ArgumentException(nameof(#DATAOBJNAMEASPARAM#));
+    }
+
+    ValidateConnectionInputs(connectionString, sqlCommandText);
+
+    try
+    {
+        #SQLPARAMCONTENT#
+
+        var jsonString = await _sqlHelper.ExecuteReaderAsync(connectionString, sqlCommandText, sqlParameters);
+        return jsonString;
+    }
+    catch (Exception ex)
+    {
+        _errorPublishLibrary.ReportError(ex, Assembly.GetExecutingAssembly().ToString(),
+            ex.GetType().ToString(),
+            "Error", Environment.UserName, signalRClientId);
+        throw;
+    }
+}

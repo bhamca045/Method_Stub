@@ -1,0 +1,34 @@
+﻿public async Task<string> #SQLLIBMETHODNAME#(#DATAOBJNAME# #DATAOBJNAMEASPARAM#, string #DATAOBJNAMEASPARAM#ApiUrl, string signalRClientId)
+{
+    if (#DATAOBJNAMEASPARAM# == null)
+    {
+        throw new ArgumentNullException(nameof(#DATAOBJNAMEASPARAM#));
+    }
+
+    if (string.IsNullOrEmpty(#DATAOBJNAMEASPARAM#ApiUrl))
+    {
+        throw new ArgumentNullException(nameof(#DATAOBJNAMEASPARAM#ApiUrl));
+    }
+
+    if (string.IsNullOrEmpty(signalRClientId))
+    {
+        throw new ArgumentNullException(nameof(signalRClientId));
+    }
+
+    string strResponse;
+    try
+    {
+        var strBodyContent = JsonConvert.SerializeObject(#DATAOBJNAMEASPARAM#);
+        var httpResponse = await _dAConnector.GetDataAccessSvcResponse(_httpRequestManager, #DATAOBJNAMEASPARAM#ApiUrl, HttpMethod.Post, strBodyContent);
+
+        strResponse = _dAConnector.GetResponseContent(httpResponse);
+    }
+    catch (Exception ex)
+    {
+        _errorPublisher.LogException(ex, Assembly.GetExecutingAssembly().ToString(), ex.GetType().ToString(),
+            Environment.UserName, signalRClientId);
+        throw;
+    }
+
+    return strResponse;
+}

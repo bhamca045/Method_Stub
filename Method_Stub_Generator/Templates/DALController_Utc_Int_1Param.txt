@@ -1,0 +1,42 @@
+﻿[TestMethod]
+[ExpectedException(typeof(NullReferenceException))]
+public void #SQLLIBMETHODNAME#_NullTest()
+{
+    // Arrange
+    var mockErrorPublisher = GetMockErrorLibraryInstance();
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+	int inputVal = 0;
+
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(mockErrorPublisher.Object, mockKeyVault.Object,
+        nul, mockActivationContext);
+    var result = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(inputVal).Result;
+
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_SuccessTest()
+{
+    // Arrange
+    string serializedData = "";
+
+    var mockErrorPublisher = GetMockErrorLibraryInstance();
+    var mockKeyVault = GetMockKeyVault();
+    var mockActivationContext = GetMockCodePackageActivationContext();
+    var mock#CLASSNAME# = new Mock<I#CLASSNAME#>();
+    mock#CLASSNAME#.Setup(a => a.#SQLLIBMETHODNAME#(It.IsAny<int>(), It.IsAny<string>(),
+            It.IsAny<string>(), It.IsAny<string>()))
+        .ReturnsAsync(serializedData);
+    
+	int inputVal = ;
+    
+    // Act
+    var #CLASSNAMEASPARAM#Controller = new #CLASSNAME#Controller(mockErrorPublisher.Object, mockKeyVault.Object,
+        mock#CLASSNAME#.Object, mockActivationContext);
+    var result = #CLASSNAMEASPARAM#Controller.#SQLLIBMETHODNAME#(inputVal).Result;
+
+    //Assert
+    Assert.IsNotNull(result);
+    Assert.AreEqual(result, serializedData);
+}

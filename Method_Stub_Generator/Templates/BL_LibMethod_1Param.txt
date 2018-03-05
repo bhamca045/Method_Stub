@@ -1,0 +1,28 @@
+﻿public async Task<string> #SQLLIBMETHODNAME#(string #DATAOBJNAMEASPARAM#ApiUrl, string signalRClientId)
+{
+    if (string.IsNullOrEmpty(#DATAOBJNAMEASPARAM#ApiUrl))
+    {
+        throw new ArgumentNullException(nameof(#DATAOBJNAMEASPARAM#ApiUrl));
+    }
+
+    if (string.IsNullOrEmpty(signalRClientId))
+    {
+        throw new ArgumentNullException(nameof(signalRClientId));
+    }
+
+    string strResponse;
+    try
+    {
+        var httpResponse = await _dAConnector.GetDataAccessSvcResponse(_httpRequestManager, #DATAOBJNAMEASPARAM#ApiUrl, HttpMethod.Get);
+
+        strResponse = _dAConnector.GetResponseContent(httpResponse);
+    }
+    catch (Exception ex)
+    {
+        _errorPublisher.LogException(ex, Assembly.GetExecutingAssembly().ToString(), ex.GetType().ToString(),
+            Environment.UserName, signalRClientId);
+        throw;
+    }
+
+    return strResponse;
+}

@@ -1,0 +1,76 @@
+﻿[TestMethod]
+public void #SQLLIBMETHODNAME#_#DATAOBJNAME#_Null()
+{
+    // Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#();
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(null, string.Empty, string.Empty);
+
+    // Assert
+    if (result.Exception?.InnerException != null)
+    {
+        Assert.AreEqual("Value cannot be null.\r\nParameter name: #DATAOBJNAMEASPARAM#"",
+            result.Exception.InnerException.Message);
+    }
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_EmptyObject()
+{
+    // Arrange
+    #EMPTYDATAOBJFORUTC#
+
+    var httpResponseMessage = new HttpResponseMessage()
+    {
+        StatusCode = HttpStatusCode.BadRequest,
+        Content = new StringContent("true")
+    };
+    var mockHttpClient = GetHttpClientWithMockMessageHandler(httpResponseMessage);
+
+    // Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#(mockHttpClient);
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, TestDataAccessSqlApiUrl, TestSignalRId).Result;
+
+    // Assert
+    Assert.IsFalse(string.IsNullOrEmpty(result));
+    Assert.AreEqual(result, ReqFailMessage);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_InvalidValues()
+{
+    // Arrange
+    #DATAOBJFORUTC#
+
+    var mockHttpClient = GetHttpClientWithMockMessageHandler(httpResponseMessage);
+
+    // Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#(mockHttpClient);
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, TestDataAccessSqlApiUrl, TestSignalRId).Result;
+
+    // Assert
+    Assert.IsFalse(string.IsNullOrEmpty(result));
+    Assert.AreEqual(result, ReqFailMessage);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_Valid()
+{
+    // Arrange
+    var getReqResponseContent = "";
+    #DATAOBJFORUTC#
+
+    var httpResponseMessage = new HttpResponseMessage()
+    {
+        StatusCode = HttpStatusCode.OK,
+        Content = new StringContent(getReqResponseContent)
+    };
+    var mockHttpClient = GetHttpClientWithMockMessageHandler(httpResponseMessage);
+
+    // Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#(mockHttpClient);
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, TestDataAccessSqlApiUrl, TestSignalRId).Result;
+
+    // Assert
+    Assert.IsFalse(string.IsNullOrEmpty(result));
+    Assert.AreEqual(result, getReqResponseContent);
+}

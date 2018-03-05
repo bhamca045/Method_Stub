@@ -1,0 +1,20 @@
+﻿[Route("#SQLLIBMETHODNAME#/{#DATAOBJNAMEASPARAM#}/{signalRClientId?}")]
+[HttpGet]
+public async Task<string> #SQLLIBMETHODNAME#(#DATAOBJNAME# #DATAOBJNAMEASPARAM#, string signalRClientId = "")
+{
+    try
+    {
+	    var #DATAOBJNAMEASPARAM#Sp = _configurationPackage.Settings.Sections["StoredProc"].Parameters[""].Value;
+        var #DATAOBJNAMEASPARAM#Results = await #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, _sqlCdoSuite6ConnectionString, #DATAOBJNAMEASPARAM#Sp, signalRClientId);
+        return #DATAOBJNAMEASPARAM#Results;
+    }
+
+    catch (Exception ex)
+    {
+        _telemetryClient.TrackException(ex);
+        _errorPublishLibrary.ReportError(ex, Assembly.GetExecutingAssembly().ToString(),
+            ex.GetType().ToString(),
+            "Error", Environment.UserName, "", signalRClientId);
+        throw;
+    }
+}

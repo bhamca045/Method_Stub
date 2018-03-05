@@ -1,0 +1,116 @@
+﻿[TestMethod]
+public void #SQLLIBMETHODNAME#_ConnectionString_NullTest()
+{
+    //Arrange
+    #DATAOBJFORUTC#
+
+    //Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#(null, null, null);
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, null, string.Empty, string.Empty);
+
+    //Assert
+    Assert.IsNotNull(result);
+    if (result.Exception?.InnerException != null)
+    {
+        Assert.AreEqual("Value cannot be null.\r\nParameter name: connectionString",
+            result.Exception.InnerException.Message);
+    }
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_ConnectionString_EmptyTest()
+{
+    //Arrange
+    #DATAOBJFORUTC#
+
+    //Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#(null, null, null);
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, string.Empty, string.Empty, string.Empty);
+
+    //Assert
+    Assert.IsNotNull(result);
+    if (result.Exception?.InnerException != null)
+    {
+        Assert.AreEqual("Value cannot be null.\r\nParameter name: connectionString",
+            result.Exception.InnerException.Message);
+    }
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_SqlCommand_NullTest()
+{
+    //Arrange
+    #DATAOBJFORUTC#
+
+    //Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#(null, null, null);
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, SqlTestConnectionString, null);
+
+    //Assert
+    Assert.IsNotNull(result);
+    if (result.Exception?.InnerException != null)
+    {
+        Assert.AreEqual("Value cannot be null.\r\nParameter name: sqlCommandText",
+            result.Exception.InnerException.Message);
+    }
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_SqlCommand_EmptyTest()
+{
+    //Arrange
+    #DATAOBJFORUTC#
+
+    //Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#(null, null, null);
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, SqlTestConnectionString, string.Empty);
+
+    //Assert
+    Assert.IsNotNull(result);
+    if (result.Exception?.InnerException != null)
+    {
+        Assert.AreEqual("Value cannot be null.\r\nParameter name: sqlCommandText",
+            result.Exception.InnerException.Message);
+    }
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_#DATAOBJNAME#_ValidResults()
+{
+    //Arrange
+    var sampleDasResponse = "";
+
+    var mockCommon = GetCommonMock_ExecuteReader(sampleDasResponse);
+
+    #DATAOBJFORUTC#
+
+    //Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#(mockCommon.Object);
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, SqlTestConnectionString, SqlTestSpName).Result;
+
+    //Assert
+    Assert.IsNotNull(result);
+    Assert.AreEqual(result, sampleDasResponse);
+}
+
+[TestMethod]
+public void #SQLLIBMETHODNAME#_#DATAOBJNAME#_Exception()
+{
+    //Arrange
+    var sampleDasResponse = "";
+    var mockCommon = GetCommonMock_ExecuteReader(string.Empty, sampleDasResponse);
+    var mockErrorPublisher = GetMockErrorPublishInstance();
+    #DATAOBJFORUTC#
+
+    //Act
+    var #CLASSNAMEASPARAM# = new #CLASSNAME#(mockCommon.Object, mockErrorPublisher.Object);
+    var result = #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, SqlTestConnectionString, SqlTestSpName);
+
+    //Assert
+    Assert.IsNotNull(result);
+    if (result.Exception?.InnerException != null)
+    {
+        Assert.AreEqual("The ConnectionString property has not been initialized.",
+            result.Exception.InnerException.Message);
+    }
+}
