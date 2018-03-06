@@ -1,4 +1,11 @@
-﻿[Route("#SQLLIBMETHODNAME#")]
+﻿/// <summary>
+/// 
+/// </summary>
+/// <param name="reqDataMessage">Request Message Information.</param>
+/// <returns>Returns the updated results.</returns>
+/// <response code="200">Responds the Push Messaging bool status.</response>
+/// <response code="500">Responds if the request processing fails due to internal error.</response>
+[Route("#SQLLIBMETHODNAME#")]
 [ProducesResponseType(typeof(OkObjectResult), 200)]
 [ProducesResponseType(typeof(StatusCodeResult), 500)]
 [HttpPost]
@@ -17,7 +24,7 @@ public async Task<IActionResult> #SQLLIBMETHODNAME#([FromBody]RequestDataMessage
 
         // Gets the #DATAOBJNAME# Api of Data Access Service.
         var #DATAOBJNAMEASPARAM#ApiUrl = DataAccessSqlApiBaseUrl + "api/#CLASSNAME#/#SQLLIBMETHODNAME#/" + reqDataMessage.ClientId;
-        var svcResponse = await #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, #DATAOBJNAMEASPARAM#ApiUrl, reqDataMessage.ClientId);
+        var svcResponse = await _#CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#, #DATAOBJNAMEASPARAM#ApiUrl, reqDataMessage.ClientId);
 
         // Sends the Data Access Service Response to App.
         var pushStatus = await SendPushMsgToApp(svcResponse, reqDataMessage.ClientId, reqDataMessage.CorrelationId);

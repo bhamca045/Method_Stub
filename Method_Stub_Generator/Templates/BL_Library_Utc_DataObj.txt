@@ -41,6 +41,11 @@ public void #SQLLIBMETHODNAME#_InvalidValues()
     // Arrange
     #DATAOBJFORUTC#
 
+	var httpResponseMessage = new HttpResponseMessage()
+    {
+        StatusCode = HttpStatusCode.BadRequest,
+        Content = new StringContent("true")
+    };
     var mockHttpClient = GetHttpClientWithMockMessageHandler(httpResponseMessage);
 
     // Act
@@ -56,7 +61,7 @@ public void #SQLLIBMETHODNAME#_InvalidValues()
 public void #SQLLIBMETHODNAME#_Valid()
 {
     // Arrange
-    var getReqResponseContent = "";
+    var getReqResponseContent = "[{\"Property1\":\"Value1\"}]";
     #DATAOBJFORUTC#
 
     var httpResponseMessage = new HttpResponseMessage()

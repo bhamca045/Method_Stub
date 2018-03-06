@@ -1,4 +1,11 @@
-﻿public async Task<string> #SQLLIBMETHODNAME#(#DATAOBJNAME# #DATAOBJNAMEASPARAM#, string #DATAOBJNAMEASPARAM#ApiUrl, string signalRClientId)
+﻿/// <summary>
+/// 
+/// </summary>
+/// <param name="#DATAOBJNAMEASPARAM#"></param>
+/// <param name="#DATAOBJNAMEASPARAM#ApiUrl"></param>
+/// <param name="signalRClientId">SignalRClientId to notify client call.</param>
+/// <returns>The Data Access service response in Json serialized string.</returns>
+public async Task<string> #SQLLIBMETHODNAME#(#DATAOBJNAME# #DATAOBJNAMEASPARAM#, string #DATAOBJNAMEASPARAM#ApiUrl, string signalRClientId)
 {
     if (#DATAOBJNAMEASPARAM# == null)
     {

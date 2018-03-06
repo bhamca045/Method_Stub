@@ -52,7 +52,7 @@ public void #SQLLIBMETHODNAME#_Invalid_Test()
 public void #SQLLIBMETHODNAME#_Valid()
 {
     // Arrange
-    var getReqResponseContent = "";
+    var getReqResponseContent = "[{\"Property1\":\"Value1\"}]";
 
     var httpResponseMessage = new HttpResponseMessage()
     {

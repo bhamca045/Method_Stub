@@ -1,4 +1,11 @@
-﻿[Route("#SQLLIBMETHODNAME#/{signalRClientId?}")]
+﻿/// <summary>
+/// 
+/// </summary>
+/// <param name="#DATAOBJNAMEASPARAM#"></param>
+/// <param name="signalRClientId">SignalRClientId to notify client call.</param>
+/// <returns>Returns the result as json string.</returns>
+[Route("#SQLLIBMETHODNAME#/{signalRClientId?}")]
+[HttpPost]
 public async Task<string> #SQLLIBMETHODNAME#([FromBody] dynamic #DATAOBJNAMEASPARAM#, string signalRClientId = "")
 {
     try
@@ -13,7 +20,7 @@ public async Task<string> #SQLLIBMETHODNAME#([FromBody] dynamic #DATAOBJNAMEASPA
         var #DATAOBJNAMEASPARAM#Sp = _configurationPackage.Settings.Sections["StoredProc"].Parameters[""].Value;
 
         // Executes the #DATAOBJNAME# sp and returns the results.
-        var #DATAOBJNAMEASPARAM#Results = await #CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#Input,
+        var #DATAOBJNAMEASPARAM#Results = await _#CLASSNAMEASPARAM#.#SQLLIBMETHODNAME#(#DATAOBJNAMEASPARAM#Input,
             _sqlCdoSuite6ConnectionString, #DATAOBJNAMEASPARAM#Sp, signalRClientId);
 
         return #DATAOBJNAMEASPARAM#Results;

@@ -1,4 +1,10 @@
-﻿[Route("#SQLLIBMETHODNAME#/{#DATAOBJNAMEASPARAM#}/{signalRClientId?}")]
+﻿/// <summary>
+/// 
+/// </summary>
+/// <param name="#DATAOBJNAMEASPARAM#"></param>
+/// <param name="signalRClientId">SignalRClientId to notify client call.</param>
+/// <returns>Returns the result as json string.</returns>
+[Route("#SQLLIBMETHODNAME#/{#DATAOBJNAMEASPARAM#}/{signalRClientId?}")]
 [HttpGet]
 public async Task<string> #SQLLIBMETHODNAME#(#DATAOBJNAME# #DATAOBJNAMEASPARAM#, string signalRClientId = "")
 {

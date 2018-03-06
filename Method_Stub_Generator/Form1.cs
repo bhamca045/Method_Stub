@@ -68,6 +68,7 @@ namespace Method_Stub_Generator
                 strDataObj.Append(GenerateDataObject(dt, txtStoreProc.Text.Trim()));
 
                 var dataObjNameForMethod = _stubNames["dataobjname"];
+
                 _stubNames.Add("sqllibmethodname", dataObjNameForMethod + "Async");
 
                 var dataObjNameForMethodParam = dataObjNameForMethod[0].ToString().ToLower() +
@@ -84,7 +85,7 @@ namespace Method_Stub_Generator
 
                 GenerateDataObjForUtcUse(dt, dataObjNameForMethod, dataObjNameForMethodParam);
 
-                string emptyDataObj = $"var {dataObjNameForMethodParam} = {dataObjNameForMethod}();";
+                string emptyDataObj = $"var {dataObjNameForMethodParam} = new {dataObjNameForMethod}();";
                 _stubNames.Add("emptydataobjforutc", emptyDataObj);
 
                 strDataObj.AppendLine("BL Library Class UTC Code:");
@@ -115,7 +116,6 @@ namespace Method_Stub_Generator
                 var type = TypeConverter.ToClrType(GetSqlDbType(dt.Rows[0]["Data_Type"].ToString()), false);
                 _stubNames.Add("dataobjname", type);
                 var dataObjNameForMethod = ChangeVarName(txtStoreProc.Text.Trim()) + "Details";
-
                 _stubNames.Add("sqllibmethodname", dataObjNameForMethod + "Async");
 
                 var sqlParam = ChangeVarName(dt.Rows[0]["Parameter_Name"].ToString());
@@ -180,6 +180,7 @@ namespace Method_Stub_Generator
                 strDataObj.Append(GenerateDataObject(dt, txtStoreProc.Text.Trim()));
 
                 var dataObjNameForMethod = _stubNames["dataobjname"];
+
                 _stubNames.Add("sqllibmethodname", dataObjNameForMethod + "Async");
 
                 var dataObjNameForMethodParam = dataObjNameForMethod[0].ToString().ToLower() +
@@ -435,7 +436,7 @@ namespace Method_Stub_Generator
         {
             var sb = new StringBuilder();
 
-            var dataObjName = ChangeVarName(spName) + "Details";
+            var dataObjName = ReArrangeSpName(ChangeVarName(spName)) + "Details";
             _stubNames.Add("dataobjname", dataObjName);
 
             sb.AppendFormat("public class {0}", dataObjName);
@@ -452,6 +453,31 @@ namespace Method_Stub_Generator
             sb.Append("}" + Environment.NewLine);
 
             return sb.ToString();
+        }
+
+        private string ReArrangeSpName(string spName)
+        {
+            string modifiedSp;
+            if (spName.EndsWith("Put"))
+            {
+                modifiedSp = spName.Replace("Put", "");
+                modifiedSp = "Save" + modifiedSp;
+            }
+            else if (spName.ToLower().EndsWith("Get"))
+            {
+                modifiedSp = spName.Replace("Get", "");
+                modifiedSp = "Get" + modifiedSp;
+            }
+            else if (spName.ToLower().EndsWith("Del"))
+            {
+                modifiedSp = spName.Replace("Del", "");
+                modifiedSp = "Delete" + modifiedSp;
+            }
+            else
+            {
+                modifiedSp = spName;
+            }
+            return modifiedSp;
         }
 
         private string ChangeVarName(string sqlParamName)
@@ -765,7 +791,7 @@ namespace Method_Stub_Generator
         private string GenerateDataObjForUtcUse(DataTable dt, string dataObjClassName, string dataObjClassDeclared)
         {
             var dataObjUtc = new StringBuilder();
-            dataObjUtc.AppendFormat("var {0} = {1}", dataObjClassDeclared, dataObjClassName);
+            dataObjUtc.AppendFormat("var {0} = new {1}()", dataObjClassDeclared, dataObjClassName);
             dataObjUtc.Append(Environment.NewLine + "{" + Environment.NewLine);
 
             var paramsList = new StringBuilder();
@@ -776,7 +802,7 @@ namespace Method_Stub_Generator
                 paramsList.Append(Environment.NewLine);
             }
             dataObjUtc.Append(paramsList.ToString().Substring(0, paramsList.ToString().Length - 3));
-            dataObjUtc.Append(Environment.NewLine + "}" + Environment.NewLine);
+            dataObjUtc.Append(Environment.NewLine + "};" + Environment.NewLine);
 
             _stubNames.Add("dataobjforutc", dataObjUtc.ToString());
             return dataObjUtc.ToString();
